@@ -1,6 +1,6 @@
 #include <RF24.h>
 #include "INRF_logger.hpp"
-
+#include "CallBackInerface.hpp"
 
 class NRF_logger: public INRF_logger
 {
@@ -11,6 +11,13 @@ private:
    uint8_t node_2;
    bool role;
    NRF_Data buffer;
+   
+   //callback using interface
+   CallBackInerface* logger_callback;
+
+   //callback using fun pointer
+   CallbackFunctionPtr cbPtr;
+   void* ptr;
 public:
     NRF_logger(const RF24 &radio,uint8_t node_1, uint8_t node_2){
     this->radio=radio;
@@ -34,6 +41,20 @@ public:
         this->radio.openReadingPipe(1,this->node_2);
         this->radio.startListening();
     }
+
+    //callback using interface
+    void setCallbacks(CallBackInerface* callback){
+        this->logger_callback=callback;
+
+    }
+
+    //callback using function pointer
+    void setCallbacks(CallbackFunctionPtr cb, void *p){
+        this->cbPtr=cb;
+        this->ptr=p;
+    }
+public:
+
     void WriteLog(NRF_Data data){
         this->radio.stopListening();
         
@@ -44,16 +65,22 @@ public:
         this->radio.startListening();
     }
 
-    NRF_Data ReadLog(){
+    void ReadLog(){
         uint8_t pipe;
         if(this->radio.available(&pipe)){
             uint8_t bytes= radio.getPayloadSize();
             radio.read(&(this->buffer),bytes);
             
         }
-        return (this->buffer);
+       
+       //callback using interface
+       this->logger_callback->OnData(this->buffer);
 
+       //callback using funtion pointer
+       cbPtr(ptr,20);
     }
+
+   
 };
 
 

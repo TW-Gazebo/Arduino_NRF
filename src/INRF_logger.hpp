@@ -1,10 +1,4 @@
-
-struct  NRF_Data
-{
-    /* data */
-    char message[24];
-    double sensorData;
-};
+#include "logger_data_types.hpp"
 class INRF_logger
 {
 private:
@@ -13,7 +7,9 @@ public:
     INRF_logger(/* args */){}
     ~INRF_logger(){}
     virtual void WriteLog(NRF_Data data)=0;
-    virtual NRF_Data ReadLog()=0;
+    virtual void ReadLog()=0;
+
+
 };
 
 
