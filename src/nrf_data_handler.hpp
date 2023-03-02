@@ -42,9 +42,13 @@ public:
 
     //initialize callbacks 
     void InitializeCallbacks(OnDataPtr dataPtr,OnActionPtr actPtr, OnLogPtr logPtr){
-      this->p_OnData=dataPtr;
-      this->p_OnAction=actPtr;
-      this->p_OnLog=logPtr;
+        if(dataPtr != nullptr && actPtr != nullptr && logPtr != nullptr){
+            this->p_OnData=dataPtr;
+            this->p_OnAction=actPtr;
+            this->p_OnLog=logPtr;
+        }
+        else
+            Serial.println("callbacks pointer are null");
     }
 public:
 
@@ -54,9 +58,9 @@ public:
         if ((data.header > -1) && (strlen(data.message) != 0))
         {
             bool ack=this->radio.write(&data,sizeof(this->buffer));
-            // if(!ack){
-            //     Serial.println("Transmission failed or timed out...");
-            // }
+            if(!ack){
+                Serial.println("Transmission failed or timed out...");
+            }
             this->radio.startListening();
 
         }
