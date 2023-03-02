@@ -9,11 +9,11 @@ private:
    uint8_t node_1;
    uint8_t node_2;
    bool role;
-   NRF_Data buffer;
+   Comm_Data buffer;
 
    //callabcks pointers
    OnDataPtr p_OnData;
-   OnActionPtr p_OnAction;
+//    OnActionPtr p_OnAction;
    OnLogPtr p_OnLog; 
 
 public:
@@ -41,10 +41,10 @@ public:
     }
 
     //initialize callbacks 
-    void InitializeCallbacks(OnDataPtr dataPtr,OnActionPtr actPtr, OnLogPtr logPtr){
-        if(dataPtr != nullptr && actPtr != nullptr && logPtr != nullptr){
+    void InitializeCallbacks(OnDataPtr dataPtr, OnLogPtr logPtr){
+        if(dataPtr != nullptr && logPtr != nullptr){
             this->p_OnData=dataPtr;
-            this->p_OnAction=actPtr;
+            // this->p_OnAction=actPtr;
             this->p_OnLog=logPtr;
         }
         else
@@ -52,7 +52,7 @@ public:
     }
 public:
 
-    void WriteData(NRF_Data data){
+    void WriteData(Comm_Data data){
         this->radio.stopListening();
         
         if ((data.header > -1) && (strlen(data.message) != 0))
@@ -90,12 +90,7 @@ public:
             else
                 Serial.println("p_OnLog is null");
             }
-        if (this->buffer.header == HACT){
-            if(this->p_OnAction != nullptr)
-                this->p_OnAction(this->buffer);
-            else
-                Serial.println("p_OnAction is null");
-            }
+        
         }
         else
             Serial.println("buffer is empty...!");

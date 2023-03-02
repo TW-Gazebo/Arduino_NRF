@@ -5,15 +5,16 @@ enum Header_Types{
     HACT,
     HDATA
 };
-struct  NRF_Data
+struct Comm_Data
 {
     /* data */
     Header_Types header;
-    char message[28];
+    char message[26];
     // double sensorData;
 };
 
 //NRF callback
-typedef void(*OnDataPtr)(NRF_Data data);
-typedef void(*OnActionPtr)(NRF_Data actionData);
-typedef void(*OnLogPtr)(NRF_Data logData);
+typedef void(*OnDataPtr)(Comm_Data data);
+typedef void(*OnActionPtr)(Comm_Data actionData);
+typedef void(*OnLogPtr)(Comm_Data logData);
+// typedef void(*OnHM10DataPtr)(Comm_Data data);

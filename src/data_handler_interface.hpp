@@ -6,7 +6,7 @@ private:
 public:
     DataHandlerInterface(/* args */){}
     ~DataHandlerInterface(){}
-    virtual void WriteData(NRF_Data data)=0;
+    virtual void WriteData(Comm_Data data)=0;
     virtual void ReadData()=0;
 
 
