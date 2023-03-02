@@ -12,23 +12,32 @@ using namespace std;
 #define Node_2 01
 
 
-void OnData(char data[]){
+void OnData(NRF_Data data){
     Serial.print("Temperature data in string format: ");
-    Serial.println(data);
+    Serial.println(data.message);
     Serial.print("Temperature data in double: ");
-    float value=atof(data);
+    float value=atof(data.message);
     Serial.println(value);
     
 
+}
+
+void OnAction(NRF_Data actdata){
 
 }
 
-void OnAction(char actdata[]){
-
-}
-
-void OnLog(char logData[]){
-
+void OnLog(NRF_Data logData){
+    /*Log data for err and debug*/
+    if(logData.header == HERRLOG){
+        Serial.print("Err log: ");
+        Serial.println(logData.message);
+    }
+    if (logData.header == HDBGLOG)
+    {
+        Serial.print("Debug log: ");
+        Serial.println(logData.message);
+    }
+    
 }
 
 void SendDataToNRF();

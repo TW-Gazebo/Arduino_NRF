@@ -80,19 +80,19 @@ public:
         {
             if(this->buffer.header == HDATA){
             if(this->p_OnData != nullptr)
-                this->p_OnData(this->buffer.message);
+                this->p_OnData(this->buffer);
             else
                 Serial.println("p_OnData is mull");
             }
-        if (this->buffer.header == HLOG){
+        if ((this->buffer.header == HERRLOG) || (this->buffer.header == HDBGLOG)){
             if(this->p_OnLog != nullptr)
-                this->p_OnLog(this->buffer.message);
+                this->p_OnLog(this->buffer);
             else
                 Serial.println("p_OnLog is null");
             }
         if (this->buffer.header == HACT){
             if(this->p_OnAction != nullptr)
-                this->p_OnAction(this->buffer.message);
+                this->p_OnAction(this->buffer);
             else
                 Serial.println("p_OnAction is null");
             }

@@ -1,7 +1,7 @@
 
-
 enum Header_Types{
-    HLOG=0,
+    HERRLOG=0,
+    HDBGLOG,
     HACT,
     HDATA
 };
@@ -14,6 +14,6 @@ struct  NRF_Data
 };
 
 //NRF callback
-typedef void(*OnDataPtr)(char data[]);
-typedef void(*OnActionPtr)(char actionData[]);
-typedef void(*OnLogPtr)(char logData[]);
+typedef void(*OnDataPtr)(NRF_Data data);
+typedef void(*OnActionPtr)(NRF_Data actionData);
+typedef void(*OnLogPtr)(NRF_Data logData);
