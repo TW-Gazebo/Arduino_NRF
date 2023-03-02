@@ -33,6 +33,7 @@ void OnLog(char logData[]){
 
 void SendDataToNRF();
 
+
 /*Setting up the NRF data handler*/
 RF24 radio(7,8);
 NRFDataHandler nrfDataHandler(radio,Node_1,Node_2);
