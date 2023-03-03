@@ -1,4 +1,6 @@
-
+// #ifndef HM10DataHandler_H
+// #define HM10DataHandler_H
+#pragma once
 enum Header_Types{
     HERRLOG=0,
     HDBGLOG,
@@ -18,3 +20,5 @@ typedef void(*OnDataPtr)(Comm_Data data);
 typedef void(*OnActionPtr)(Comm_Data actionData);
 typedef void(*OnLogPtr)(Comm_Data logData);
 // typedef void(*OnHM10DataPtr)(Comm_Data data);
+
+// #endif

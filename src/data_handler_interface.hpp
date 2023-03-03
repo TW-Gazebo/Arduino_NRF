@@ -1,3 +1,6 @@
+// #ifndef Data_Handler_Interface_H
+// #define Data_Handler_Interface_H
+#pragma once
 #include "handler_data_types.hpp"
 class DataHandlerInterface
 {
@@ -11,5 +14,5 @@ public:
 
 
 };
-
+// #endif
 

@@ -1,3 +1,5 @@
+
+#pragma once
 #include <RF24.h>
 #include "data_handler_interface.hpp"
 
@@ -53,19 +55,20 @@ public:
 public:
 
     void WriteData(Comm_Data data){
+        Serial.println(data.message);
         this->radio.stopListening();
         
-        if ((data.header > -1) && (strlen(data.message) != 0))
-        {
+        // if ((data.header > -1) && (strlen(data.message) != 0))
+        // {
             bool ack=this->radio.write(&data,sizeof(this->buffer));
             if(!ack){
-                Serial.println("Transmission failed or timed out...");
+                // Serial.println("Transmission failed or timed out...");
             }
             this->radio.startListening();
 
-        }
-        else
-            Serial.println("Data is empty");
+        // }
+        // else
+        //     Serial.println("Data is empty");
     }
 
     void ReadData(){
@@ -76,8 +79,8 @@ public:
             
         }
 
-        if ((this->buffer.header > -1) && (strlen(this->buffer.message) != 0))
-        {
+        // if ((this->buffer.header > -1) && (strlen(this->buffer.message) != 0))
+        // {
             if(this->buffer.header == HDATA){
                 if(this->p_OnData != nullptr)
                 this->p_OnData(this->buffer);
@@ -97,9 +100,9 @@ public:
                 Serial.println("p_OnLog is null");
             }
         
-        }
-        else
-            Serial.println("buffer is empty...!");
+        // }
+        // else
+        //     Serial.println("buffer is empty...!");
         
         
         
