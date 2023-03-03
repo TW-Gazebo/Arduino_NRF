@@ -13,23 +13,19 @@ using namespace std;
 #define Node_1 00
 #define Node_2 01
 
-
-
-
 void SendDataToNRF();
-
 
 /*Setting up the NRF data handler*/
 RF24 radio(7,8);
 SoftwareSerial HM10(4,5); //Rx-4, TX-5
-NRFDataHandler nrfDataHandler(radio,Node_1,Node_2);
+NRFDataHandler nrfDataHandler(radio,Node_1,Node_2); 
 HM10DataHandler hm10datahandler(&HM10);
 
 void setup(){
  Serial.begin(9600);
  SPI.begin();
  nrfDataHandler.SetupRadio();
- nrfDataHandler.InitializeCallbacks(OnData,OnLog);
+ nrfDataHandler.InitializeCallbacks(OnData,OnLog,OnAction);
  hm10datahandler.InitializeCallbacks(OnAction);
 }
 void loop(){

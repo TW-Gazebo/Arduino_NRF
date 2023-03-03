@@ -13,7 +13,7 @@ private:
 
    //callabcks pointers
    OnDataPtr p_OnData;
-//    OnActionPtr p_OnAction;
+   OnActionPtr p_OnAction;
    OnLogPtr p_OnLog; 
 
 public:
@@ -41,10 +41,10 @@ public:
     }
 
     //initialize callbacks 
-    void InitializeCallbacks(OnDataPtr dataPtr, OnLogPtr logPtr){
+    void InitializeCallbacks(OnDataPtr dataPtr, OnLogPtr logPtr,OnActionPtr actPtr){
         if(dataPtr != nullptr && logPtr != nullptr){
             this->p_OnData=dataPtr;
-            // this->p_OnAction=actPtr;
+            this->p_OnAction=actPtr;
             this->p_OnLog=logPtr;
         }
         else
@@ -79,15 +79,21 @@ public:
         if ((this->buffer.header > -1) && (strlen(this->buffer.message) != 0))
         {
             if(this->buffer.header == HDATA){
-            if(this->p_OnData != nullptr)
+                if(this->p_OnData != nullptr)
                 this->p_OnData(this->buffer);
-            else
+                else
                 Serial.println("p_OnData is mull");
             }
-        if ((this->buffer.header == HERRLOG) || (this->buffer.header == HDBGLOG)){
-            if(this->p_OnLog != nullptr)
+            if(this->buffer.header == HACT){
+                if(this->p_OnAction != nullptr)
+                this->p_OnAction(this->buffer);
+                else
+                Serial.println("p_OnData is mull");
+            }
+            if ((this->buffer.header == HERRLOG) || (this->buffer.header == HDBGLOG)){
+                if(this->p_OnLog != nullptr)
                 this->p_OnLog(this->buffer);
-            else
+                else
                 Serial.println("p_OnLog is null");
             }
         
